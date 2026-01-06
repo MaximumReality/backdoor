@@ -98,5 +98,14 @@
     <p style="text-align: center; font-size: 12px; margin-top: 20px;">TIMESTAMP: 2099-01-06 // AZUL_SYSTEMS_OVERRIDE</p>
     
     <a href="https://maximumreality.xyz/" style="display: block; text-align: center; color: #00ff00; text-decoration: none; margin-bottom: 40px;">[ DISCONNECT_FEED ]</a>
+<script>
+    // This "Wakes Up" the videos specifically for Safari
+    document.addEventListener('touchstart', function() {
+        document.querySelectorAll('video').forEach(v => {
+            v.play();
+        });
+    }, {once: true});
+</script>
+
 </body>
 </html>
