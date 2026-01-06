@@ -10,106 +10,96 @@
         
         body { height: 100vh; display: flex; flex-direction: column; align-items: center; justify-content: center; }
 
-        /* THE BRAIN CORE */
         .brain-container {
-            position: relative; width: 250px; height: 250px;
+            position: relative; width: 280px; height: 280px;
             border-radius: 50%; border: 1px solid rgba(255, 0, 255, 0.2);
             display: flex; align-items: center; justify-content: center;
-            animation: pulse 4s ease-in-out infinite;
+            animation: pulse 4s ease-in-out infinite; z-index: 5;
         }
 
         @keyframes pulse {
             0%, 100% { transform: scale(1); box-shadow: 0 0 20px rgba(255, 0, 255, 0.2); }
-            50% { transform: scale(1.05); box-shadow: 0 0 50px rgba(255, 0, 255, 0.5); }
+            50% { transform: scale(1.05); box-shadow: 0 0 50px rgba(255, 0, 255, 0.4); }
         }
 
-        .brain-core {
-            font-size: 80px; filter: drop-shadow(0 0 10px var(--brain-pink));
-            z-index: 5; cursor: pointer;
-        }
+        .brain-core { font-size: 80px; filter: drop-shadow(0 0 10px var(--brain-pink)); cursor: pointer; }
 
-        /* FLOATING THOUGHTS (Synapses) */
-        .synapse {
-            position: absolute; color: var(--synapse-blue); font-size: 10px;
-            white-space: nowrap; pointer-events: none; opacity: 0;
-            animation: drift 5s linear infinite;
+        /* SECRET VIDEO OVERLAY */
+        #secret-memory {
+            display: none; position: fixed; top: 50%; left: 50%; transform: translate(-50%, -50%);
+            width: 80%; max-width: 300px; border: 2px solid var(--brain-pink);
+            z-index: 1000; background: #000; padding: 10px; box-shadow: 0 0 30px var(--brain-pink);
         }
-
-        @keyframes drift {
-            0% { transform: translate(0, 0); opacity: 0; }
-            20% { opacity: 1; }
-            80% { opacity: 1; }
-            100% { transform: translate(var(--tx), var(--ty)); opacity: 0; }
-        }
+        #secret-memory video { width: 100%; border: 1px solid #333; }
+        .close-mem { color: var(--brain-pink); text-align: right; font-size: 10px; cursor: pointer; margin-bottom: 5px; }
 
         /* INTERFACE */
-        .status-box {
-            position: fixed; top: 20px; left: 20px; border-left: 3px solid var(--brain-pink);
-            padding-left: 10px; color: var(--brain-pink); font-size: 11px;
+        .status-box { position: fixed; top: 20px; left: 20px; border-left: 3px solid var(--brain-pink); padding-left: 10px; color: var(--brain-pink); font-size: 11px; }
+        .thought-stream { position: fixed; bottom: 100px; width: 80%; text-align: center; color: var(--synapse-blue); font-size: 12px; height: 20px; }
+
+        .btn-fragment {
+            margin-top: 20px; border: 1px solid var(--brain-pink); color: var(--brain-pink);
+            padding: 8px 15px; font-size: 10px; cursor: pointer; background: transparent;
+            text-transform: uppercase; letter-spacing: 1px;
         }
 
-        .thought-stream {
-            position: fixed; bottom: 100px; width: 80%; text-align: center;
-            color: var(--synapse-blue); font-size: 12px; height: 20px;
-            text-shadow: 0 0 5px var(--synapse-blue);
-        }
-
-        /* THE WAY BACK */
-        .exit-uplink {
-            position: fixed; bottom: 30px; border: 1px solid var(--synapse-blue);
-            padding: 12px 25px; color: var(--synapse-blue); text-decoration: none;
-            font-size: 11px; letter-spacing: 2px; background: rgba(0,0,0,0.8);
-            z-index: 100;
-        }
-        .exit-uplink:active { background: var(--synapse-blue); color: #000; }
+        .exit-uplink { position: fixed; bottom: 30px; border: 1px solid var(--synapse-blue); padding: 12px 25px; color: var(--synapse-blue); text-decoration: none; font-size: 11px; z-index: 100; }
     </style>
 </head>
 <body>
 
     <div class="status-box">
         SUBJECT: MOCHKIL<br>
-        TYPE: FELINE_SNACK_CHEF<br>
-        STATE: CHAOTIC_DREAMING<br>
-        UPLINK: STABLE
+        UPLINK: ACTIVE<br>
+        HIDDEN_FILES: DETECTED
     </div>
 
-    <div class="brain-container" onclick="injectThought()">
-        <div class="brain-core">🧠</div>
-        </div>
+    <div class="brain-container">
+        <div class="brain-core" onclick="injectThought()">🧠</div>
+    </div>
 
-    <div class="thought-stream" id="stream">INITIALIZING_THOUGHT_RECOVERY...</div>
+    <button class="btn-fragment" onclick="openSecret()">Unlock_Secret_Memory_Azul_01</button>
+
+    <div id="secret-memory">
+        <div class="close-mem" onclick="closeSecret()">[ CLOSE_X ]</div>
+        <div style="font-size: 8px; color: var(--brain-pink); margin-bottom: 5px;">FILE: AZUL_PRIVACY_BREACH.MOV</div>
+        <video id="secret-vid" loop playsinline>
+            <source src="download.mp4" type="video/mp4">
+        </video>
+    </div>
+
+    <div class="thought-stream" id="stream">RECOVERING_NEURAL_DATA...</div>
 
     <a href="https://maximumreality.xyz/hacked-index.html" class="exit-uplink">TERMINATE_UPLINK</a>
 
     <script>
         const memories = [
-            "SECRET_INGREDIENT: MOON_DUST?",
-            "CYBERPUNK_NEWS: AZUL_BYPASSED_THE_KITCHEN",
-            "CHILDRENS_STORY: THE_KITTEN_WHO_STOLE_THE_STARS",
-            "RECIPE_LOG: MICHELIN_STAR_CATNIP_SOUFFLE",
-            "MEMORY_ERROR: TOO_MANY_SNACK_ATTACKS",
-            "FRAGMENT: A_WORLD_MADE_OF_PIXELS",
-            "LATEST_INTEL: THE_MAINFRAME_IS_HIDDEN_IN_THE_PANTRY"
+            "FRAGMENT: AZUL_IS_WATCHING_US",
+            "RECIPE: STARFISH_STUFFING_V3",
+            "ERROR: LITTER_BOX_DATA_LEAK",
+            "MEM: THE_BLUE_EYED_HACKER_IS_DISTRACTED",
+            "INTEL: AZUL_GAMES_DURING_WORK_HOURS"
         ];
 
         function injectThought() {
             const stream = document.getElementById('stream');
-            const randomMemory = memories[Math.floor(Math.random() * memories.length)];
-            stream.innerText = ">> " + randomMemory;
-            
-            // Spawn a visual synapse
-            for(let i=0; i<3; i++) {
-                const s = document.createElement('div');
-                s.className = 'synapse';
-                s.innerText = "0101";
-                s.style.setProperty('--tx', (Math.random() * 400 - 200) + 'px');
-                s.style.setProperty('--ty', (Math.random() * 400 - 200) + 'px');
-                document.querySelector('.brain-container').appendChild(s);
-                setTimeout(() => s.remove(), 5000);
-            }
+            stream.innerText = ">> " + memories[Math.floor(Math.random() * memories.length)];
         }
 
-        // Auto-cycle thoughts
+        function openSecret() {
+            const mem = document.getElementById('secret-memory');
+            const vid = document.getElementById('secret-vid');
+            mem.style.display = 'block';
+            vid.play();
+        }
+
+        function closeSecret() {
+            const mem = document.getElementById('secret-memory');
+            const vid = document.getElementById('secret-vid');
+            mem.style.display = 'none';
+            vid.pause();
+        }
+
         setInterval(injectThought, 3000);
     </script>
 </body>
