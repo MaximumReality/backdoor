@@ -1,19 +1,116 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-    <meta charset="UTF-8"><title>NEURAL_UPLINK | BD_03</title>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>NEURAL_UPLINK | MOCHKIL_v0.4</title>
     <style>
-        body { background: #000; display: flex; align-items: center; justify-content: center; height: 100vh; overflow: hidden; }
-        .brain-core {
-            width: 100px; height: 100px; background: #ff00ff; border-radius: 50%;
-            box-shadow: 0 0 50px #ff00ff; animation: pulse 1.5s infinite;
+        :root { --brain-pink: #ff00ff; --synapse-blue: #00e5ff; }
+        * { margin: 0; padding: 0; background: #000; font-family: 'Courier New', monospace; overflow: hidden; }
+        
+        body { height: 100vh; display: flex; flex-direction: column; align-items: center; justify-content: center; }
+
+        /* THE BRAIN CORE */
+        .brain-container {
+            position: relative; width: 250px; height: 250px;
+            border-radius: 50%; border: 1px solid rgba(255, 0, 255, 0.2);
+            display: flex; align-items: center; justify-content: center;
+            animation: pulse 4s ease-in-out infinite;
         }
-        @keyframes pulse { 0% { transform: scale(1); opacity: 0.8; } 50% { transform: scale(1.2); opacity: 1; } 100% { transform: scale(1); opacity: 0.8; } }
-        .status { position: absolute; bottom: 20px; color: #00e5ff; font-family: monospace; letter-spacing: 5px; }
+
+        @keyframes pulse {
+            0%, 100% { transform: scale(1); box-shadow: 0 0 20px rgba(255, 0, 255, 0.2); }
+            50% { transform: scale(1.05); box-shadow: 0 0 50px rgba(255, 0, 255, 0.5); }
+        }
+
+        .brain-core {
+            font-size: 80px; filter: drop-shadow(0 0 10px var(--brain-pink));
+            z-index: 5; cursor: pointer;
+        }
+
+        /* FLOATING THOUGHTS (Synapses) */
+        .synapse {
+            position: absolute; color: var(--synapse-blue); font-size: 10px;
+            white-space: nowrap; pointer-events: none; opacity: 0;
+            animation: drift 5s linear infinite;
+        }
+
+        @keyframes drift {
+            0% { transform: translate(0, 0); opacity: 0; }
+            20% { opacity: 1; }
+            80% { opacity: 1; }
+            100% { transform: translate(var(--tx), var(--ty)); opacity: 0; }
+        }
+
+        /* INTERFACE */
+        .status-box {
+            position: fixed; top: 20px; left: 20px; border-left: 3px solid var(--brain-pink);
+            padding-left: 10px; color: var(--brain-pink); font-size: 11px;
+        }
+
+        .thought-stream {
+            position: fixed; bottom: 100px; width: 80%; text-align: center;
+            color: var(--synapse-blue); font-size: 12px; height: 20px;
+            text-shadow: 0 0 5px var(--synapse-blue);
+        }
+
+        /* THE WAY BACK */
+        .exit-uplink {
+            position: fixed; bottom: 30px; border: 1px solid var(--synapse-blue);
+            padding: 12px 25px; color: var(--synapse-blue); text-decoration: none;
+            font-size: 11px; letter-spacing: 2px; background: rgba(0,0,0,0.8);
+            z-index: 100;
+        }
+        .exit-uplink:active { background: var(--synapse-blue); color: #000; }
     </style>
 </head>
 <body>
-    <div class="brain-core"></div>
-    <div class="status">SYNCING_NEURAL_MAP...</div>
+
+    <div class="status-box">
+        SUBJECT: MOCHKIL<br>
+        TYPE: FELINE_SNACK_CHEF<br>
+        STATE: CHAOTIC_DREAMING<br>
+        UPLINK: STABLE
+    </div>
+
+    <div class="brain-container" onclick="injectThought()">
+        <div class="brain-core">🧠</div>
+        </div>
+
+    <div class="thought-stream" id="stream">INITIALIZING_THOUGHT_RECOVERY...</div>
+
+    <a href="https://maximumreality.xyz/hacked-index.html" class="exit-uplink">TERMINATE_UPLINK</a>
+
+    <script>
+        const memories = [
+            "SECRET_INGREDIENT: MOON_DUST?",
+            "CYBERPUNK_NEWS: AZUL_BYPASSED_THE_KITCHEN",
+            "CHILDRENS_STORY: THE_KITTEN_WHO_STOLE_THE_STARS",
+            "RECIPE_LOG: MICHELIN_STAR_CATNIP_SOUFFLE",
+            "MEMORY_ERROR: TOO_MANY_SNACK_ATTACKS",
+            "FRAGMENT: A_WORLD_MADE_OF_PIXELS",
+            "LATEST_INTEL: THE_MAINFRAME_IS_HIDDEN_IN_THE_PANTRY"
+        ];
+
+        function injectThought() {
+            const stream = document.getElementById('stream');
+            const randomMemory = memories[Math.floor(Math.random() * memories.length)];
+            stream.innerText = ">> " + randomMemory;
+            
+            // Spawn a visual synapse
+            for(let i=0; i<3; i++) {
+                const s = document.createElement('div');
+                s.className = 'synapse';
+                s.innerText = "0101";
+                s.style.setProperty('--tx', (Math.random() * 400 - 200) + 'px');
+                s.style.setProperty('--ty', (Math.random() * 400 - 200) + 'px');
+                document.querySelector('.brain-container').appendChild(s);
+                setTimeout(() => s.remove(), 5000);
+            }
+        }
+
+        // Auto-cycle thoughts
+        setInterval(injectThought, 3000);
+    </script>
 </body>
 </html>
