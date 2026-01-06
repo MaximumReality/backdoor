@@ -69,10 +69,17 @@
 
 
         <div class="monitor">
-            <div class="monitor-label">CAM_02: KITCHEN_VAULT</div>
-            <div style="height: 200px; display: flex; align-items: center; justify-content: center; color: #555;">
-                [ SIGNAL LOST ]
-            </div>
+    <div class="monitor-label">CAM_02: KITCHEN_VAULT</div>
+    <div class="rec-light">● REC</div>
+    <video id="mochkilVideo" autoplay muted loop playsinline preload="metadata" style="width: 100%;">
+        <source src="mochkils-diary.mp4#t=0.001" type="video/mp4">
+    </video>
+    <button onclick="var v=document.getElementById('mochkilVideo'); v.muted=!v.muted; this.innerHTML=v.muted?'[ AUDIO_OFF ]':'[ AUDIO_LIVE ]';" 
+            style="width: 100%; background: #00ff00; color: #000; border: none; padding: 12px; font-family: monospace; font-weight: bold;">
+        [ TOGGLE_AUDIO_UPLINK ]
+    </button>
+</div>
+
         </div>
     </div>
 
