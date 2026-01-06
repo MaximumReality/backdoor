@@ -83,32 +83,14 @@
             </p>
         </div>
 
-        <div class="monitor">
-            <div class="monitor-label">CAM_02: KITCHEN_VAULT</div>
-            <div class="rec-light">● REC</div>
-            <video id="mochkilVideo" autoplay muted loop playsinline preload="auto">
-                <source src="mochkils-diary.mp4#t=0.001" type="video/mp4">
-            </video>
-            <button onclick="var v=document.getElementById('mochkilVideo'); v.muted=!v.muted; this.innerHTML=v.muted?'[ AUDIO_OFF ]':'[ AUDIO_LIVE ]';" 
-                    style="width: 100%; background: #00ff00; color: #000; border: none; padding: 12px; font-family: monospace; font-weight: bold; cursor: pointer;">
-                [ TOGGLE_AUDIO_UPLINK ]
-            </button>
-        </div>
-
-        <div class="monitor" style="padding: 10px; font-size: 11px; height: auto;">
-            <div class="monitor-label">ENCRYPTION_BYPASS_LOG</div>
-            <div style="margin-top: 20px; line-height: 1.4;">
-                <p style="color: #ff3333; font-weight: bold;">[!] MOCHKIL'S E-DIARY ACCESSED</p>
-                <p><span style="color: #fff;">[HACKER]:</span> Azul (Quantum Sphynx)</p>
-                <p><span style="color: #fff;">[FILE]:</span> "Shopping Run"</p>
-                <hr style="border: 0.5px solid #333;">
-                <p><strong>[00:01]</strong> Azul initiates bypass override.</p>
-                <p><strong>[00:04]</strong> List revealed: Beef, Chicken, Fish, Cookies.</p>
-                <p><strong>[00:06]</strong> <span style="background: #00ff00; color: #000; padding: 0 4px;">MOCHKIL: "It's my shopping list! What else would I write?"</span></p>
-                <p><strong>[00:10]</strong> Azul: "I was expecting elaborate plots."</p>
-            </div>
-        </div>
+       <div class="monitor" style="background: #111; display: flex; align-items: center; justify-content: center; min-height: 200px;">
+    <div class="monitor-label">CAM_02: KITCHEN_VAULT</div>
+    <div style="text-align: center;">
+        <div class="glitch-text" style="color: #ff0000; font-size: 1.2rem;">SIGNAL_LOST</div>
+        <div style="font-size: 0.7rem; color: #444; margin-top: 10px;">REASON: QUANTUM_INTERFERENCE_BY_AZUL</div>
     </div>
+</div>
+
 
     <p style="text-align: center; font-size: 12px; margin-top: 20px;">TIMESTAMP: 2099-01-06 // AZUL_SYSTEMS_OVERRIDE</p>
     
