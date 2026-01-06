@@ -32,19 +32,39 @@
         .cam-label { position: absolute; top: 8px; left: 8px; font-size: 9px; background: rgba(0,0,0,0.8); padding: 3px 7px; color: #fff; z-index: 5; border: 1px solid #0f0; }
 
         .live-vid {
-            width: 100%; height: 100%; object-fit: cover;
+            width: 100%; height: 100%; 
             filter: contrast(1.1) brightness(0.9);
             opacity: 0.9;
         }
 
-        /* DIGITAL GRIT OVERLAY */
+        /* Standard cams use 'cover' to fill space */
+        .cam-feed:not(#admin-cam) .live-vid {
+            object-fit: cover;
+        }
+
+        /* CAM_04 uses 'contain' to show the Matrix background in the black bars */
+        #admin-cam .live-vid {
+            object-fit: contain;
+            position: relative;
+            z-index: 2;
+            background: transparent;
+        }
+
+        #matrix-canvas {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            z-index: 1;
+        }
+
         .static-overlay {
             position: absolute; top:0; left:0; width:100%; height:100%;
             background: url('https://media.giphy.com/media/oEI9uWUicfLlC/giphy.gif');
-            background-size: cover; opacity: 0.04; pointer-events: none; z-index: 2;
+            background-size: cover; opacity: 0.04; pointer-events: none; z-index: 3;
         }
 
-        /* [!] EXIT PROTOCOL */
         .exit-link {
             position: fixed; bottom: 25px; left: 50%; transform: translateX(-50%);
             border: 2px solid #0f0; padding: 15px 30px; text-decoration: none; 
@@ -87,9 +107,10 @@
             </video>
         </div>
 
-        <div class="cam-feed">
+        <div class="cam-feed" id="admin-cam">
             <span class="cam-label">CAM_04: ADMIN_OVERRIDE</span>
             <div class="static-overlay"></div>
+            <canvas id="matrix-canvas"></canvas>
             <video autoplay muted loop playsinline class="live-vid">
                 <source src="cam4.mp4" type="video/mp4">
             </video>
@@ -98,5 +119,43 @@
 
     <a href="https://maximumreality.xyz/hacked-index.html" class="exit-link">EXIT_SURVEILLANCE</a>
 
+    <script>
+        const canvas = document.getElementById('matrix-canvas');
+        const ctx = canvas.getContext('2d');
+
+        // Set canvas size based on its element size
+        function resizeCanvas() {
+            canvas.width = canvas.offsetWidth;
+            canvas.height = canvas.offsetHeight;
+        }
+        
+        window.addEventListener('resize', resizeCanvas);
+        resizeCanvas();
+
+        const letters = "ABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789@#$%^&*()";
+        const fontSize = 10;
+        const columns = canvas.width / fontSize;
+        const drops = Array(Math.floor(columns)).fill(1);
+
+        function drawMatrix() {
+            ctx.fillStyle = "rgba(0, 0, 0, 0.05)";
+            ctx.fillRect(0, 0, canvas.width, canvas.height);
+
+            ctx.fillStyle = "#0f0";
+            ctx.font = fontSize + "px Courier New";
+
+            for (let i = 0; i < drops.length; i++) {
+                const text = letters.charAt(Math.floor(Math.random() * letters.length));
+                ctx.fillText(text, i * fontSize, drops[i] * fontSize);
+
+                if (drops[i] * fontSize > canvas.height && Math.random() > 0.975) {
+                    drops[i] = 0;
+                }
+                drops[i]++;
+            }
+        }
+
+        setInterval(drawMatrix, 35);
+    </script>
 </body>
 </html>
