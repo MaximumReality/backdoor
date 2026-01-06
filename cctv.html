@@ -68,18 +68,30 @@
 
 
 
-        <div class="monitor">
-    <div class="monitor-label">CAM_02: KITCHEN_VAULT</div>
-    <div class="rec-light">● REC</div>
-    <video id="mochkilVideo" autoplay muted loop playsinline preload="metadata" style="width: 100%;">
-        <source src="mochkils-diary.mp4#t=0.001" type="video/mp4">
-    </video>
-    <button onclick="var v=document.getElementById('mochkilVideo'); v.muted=!v.muted; this.innerHTML=v.muted?'[ AUDIO_OFF ]':'[ AUDIO_LIVE ]';" 
-            style="width: 100%; background: #00ff00; color: #000; border: none; padding: 12px; font-family: monospace; font-weight: bold;">
-        [ TOGGLE_AUDIO_UPLINK ]
-    </button>
-</div>
+       <div class="camera-grid">
+    <div class="monitor">
+        <div class="monitor-label">CAM_02: KITCHEN_VAULT</div>
+        <div class="rec-light">● REC</div>
+        <video id="mochkilVideo" autoplay muted loop playsinline preload="metadata">
+            <source src="download.mp4#t=0.001" type="video/mp4">
+        </video>
+        <button onclick="var v=document.getElementById('mochkilVideo'); v.muted=!v.muted; this.innerHTML=v.muted?'[ AUDIO_OFF ]':'[ AUDIO_LIVE ]';" 
+                style="width: 100%; background: #00ff00; color: #000; border: none; padding: 12px; font-family: monospace; font-weight: bold;">
+            [ TOGGLE_AUDIO_UPLINK ]
+        </button>
+    </div>
 
+    <div class="monitor" style="padding: 15px; background: rgba(0,255,0,0.05); height: auto;">
+        <div class="monitor-label">ENCRYPTION_BYPASS_LOG</div>
+        <div style="margin-top: 15px; font-size: 12px; line-height: 1.5;">
+            <p style="color: #ff3333;">[!] WARNING: FIREWALL BREACHED</p>
+            <p><span style="color: #fff;">[SUBJECT]:</span> Azul (Hacker Persona)</p>
+            <p><span style="color: #fff;">[TARGET]:</span> Mochkil’s E-Diary</p>
+            <hr style="border: 0.5px solid #333;">
+            <p><strong>[00:01]</strong> Azul bypasses override command.</p>
+            <p><strong>[00:04]</strong> File decrypted: "Shopping Run"</p>
+            <p><strong>[00:06]</strong> <span style="background: #00ff00; color: #000; padding: 0 4px;">DATA: Beef, Chicken, Fish, Cookies.</span></p>
+            <p><strong>[00:10]</strong> <span style="color: #00ff00;">AZUL: "That's it? A grocery list?"</span></p>
         </div>
     </div>
 
