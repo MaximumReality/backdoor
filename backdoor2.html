@@ -1,23 +1,117 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-    <meta charset="UTF-8"><title>DATA_LEAK | BD_02</title>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>THE_VAULT | SECURE_STORAGE</title>
     <style>
-        body { background: #000; color: #0f0; font-family: monospace; overflow: hidden; padding: 20px; }
-        .scrolling-text { animation: scroll 60s linear infinite; white-space: pre-wrap; font-size: 12px; }
-        .redacted { background: #0f0; color: #0f0; transition: background 0.3s; cursor: help; }
-        .redacted:hover { background: transparent; }
-        @keyframes scroll { from { transform: translateY(100vh); } to { transform: translateY(-100%); } }
-        .header { border-bottom: 1px solid #0f0; padding-bottom: 10px; margin-bottom: 20px; font-weight: bold; }
+        :root { --vault-green: #32cd32; --alert-red: #ff0000; }
+        * { margin: 0; padding: 0; background: #000; color: var(--vault-green); font-family: 'Courier New', monospace; }
+        body { padding: 30px; height: 100vh; display: flex; flex-direction: column; }
+
+        /* SECURITY SCANNER LINE */
+        .scanner {
+            position: fixed; top: 0; left: 0; width: 100%; height: 5px;
+            background: rgba(50, 205, 50, 0.3); box-shadow: 0 0 15px var(--vault-green);
+            animation: scan 3s linear infinite; pointer-events: none;
+        }
+        @keyframes scan { 0% { top: 0; } 100% { top: 100%; } }
+
+        .header { border-bottom: 2px solid var(--vault-green); padding-bottom: 15px; margin-bottom: 30px; }
+        .warning { color: var(--alert-red); font-weight: 900; animation: blink 1s infinite; }
+        @keyframes blink { 50% { opacity: 0; } }
+
+        /* FILE LIST */
+        .file-list { list-style: none; flex-grow: 1; }
+        .file-item {
+            padding: 12px; border: 1px solid #1a1a1a; margin-bottom: 10px;
+            cursor: pointer; display: flex; justify-content: space-between;
+            transition: 0.2s; font-size: 13px;
+        }
+        .file-item:hover { background: rgba(50, 205, 50, 0.1); border-color: var(--vault-green); }
+        .file-item:active { transform: scale(0.98); background: var(--vault-green); color: #000; }
+
+        .file-meta { font-size: 10px; opacity: 0.6; }
+
+        /* FOOTER / EXIT */
+        .vault-footer { margin-top: auto; padding-top: 20px; text-align: center; }
+        .exit-vault {
+            display: inline-block; border: 1px solid var(--vault-green);
+            padding: 12px 30px; text-decoration: none; font-size: 11px;
+            text-transform: uppercase; letter-spacing: 2px;
+        }
+        .exit-vault:active { background: var(--vault-green); color: #000; }
+
+        /* LOADING BAR EFFECT */
+        #loading-overlay {
+            position: fixed; top: 0; left: 0; width: 100%; height: 100%;
+            background: #000; z-index: 1000; display: none;
+            align-items: center; justify-content: center; flex-direction: column;
+        }
     </style>
 </head>
 <body>
-    <div class="header">QUANTUM_LITTERBOX_V2.0 | ENCRYPTED_LOGS</div>
-    <div class="scrolling-text">
-        [AZUL]: Have you secured the catnip uplink?
-        [MOCHKIL]: <span class="redacted">The Chef never reveals his sources.</span>
-        [AZUL]: If the humans find the code in the HTML, the reality will collapse.
-        [MOCHKIL]: <span class="redacted">Let it collapse. I have snacks.</span>
+    <div class="scanner"></div>
+
+    <div id="loading-overlay">
+        <p>DECRYPTING_FILE...</p>
+        <div style="width: 200px; height: 10px; border: 1px solid #32cd32; margin-top: 10px;">
+            <div id="bar" style="width: 0%; height: 100%; background: #32cd32;"></div>
         </div>
+    </div>
+
+    <div class="header">
+        <h1>[!] MASTER_DIRECTORY</h1>
+        <p class="warning">UNAUTHORIZED ACCESS DETECTED: NODE_14</p>
+    </div>
+
+    <ul class="file-list">
+        <li class="file-item" onclick="openFile('NOVEL_PROJ_CYBER_NOIRE.txt')">
+            <span>📄 NOVEL_PROJ_CYBER_NOIRE.txt</span>
+            <span class="file-meta">45.2 KB</span>
+        </li>
+        <li class="file-item" onclick="openFile('MOCHKIL_CHEF_LOGS_v01.json')">
+            <span>📄 MOCHKIL_CHEF_LOGS_v01.json</span>
+            <span class="file-meta">12.8 KB</span>
+        </li>
+        <li class="file-item" onclick="openFile('AZUL_BRAIN_MAP_2099.bin')">
+            <span>📄 AZUL_BRAIN_MAP_2099.bin</span>
+            <span class="file-meta">1.4 GB</span>
+        </li>
+        <li class="file-item" onclick="openFile('UNRELEASED_ARCADE_SPRITES.zip')">
+            <span>📄 UNRELEASED_ARCADE_SPRITES.zip</span>
+            <span class="file-meta">250 MB</span>
+        </li>
+        <li class="file-item" onclick="openFile('SECTOR_ZERO_PASSCODES.key')">
+            <span>📄 SECTOR_ZERO_PASSCODES.key</span>
+            <span class="file-meta">4 KB</span>
+        </li>
+    </ul>
+
+    <div class="vault-footer">
+        <a href="https://maximumreality.xyz/hacked-index.html" class="exit-vault">Abort_and_Eject</a>
+    </div>
+
+    <script>
+        function openFile(fileName) {
+            const overlay = document.getElementById('loading-overlay');
+            const bar = document.getElementById('bar');
+            overlay.style.display = 'flex';
+            
+            let width = 0;
+            const interval = setInterval(() => {
+                if (width >= 100) {
+                    clearInterval(interval);
+                    alert("ERROR: ENCRYPTION_TOO_STRONG. \n\n'"+fileName+"' requires biometric paw-print of Azul to view.");
+                    overlay.style.display = 'none';
+                    width = 0;
+                    bar.style.width = "0%";
+                } else {
+                    width += 5;
+                    bar.style.width = width + "%";
+                }
+            }, 50);
+        }
+    </script>
 </body>
 </html>
