@@ -43,31 +43,29 @@
     <div class="vhs-overlay"></div>
     
         <div class="camera-grid">
-        <div class="monitor">
-            <div class="monitor-label">CAM_01: LAB_PORTAL</div>
-            <div class="rec-light">● REC</div>
-            <video autoplay muted loop playsinline preload="metadata" style="width: 100%;">
-                <source src="https://maximumreality.github.io/backdoor/export_1767728050408.mp4#t=0.001" type="video/mp4">
-            </video>
-            <button onclick="document.querySelector('video').muted = !document.querySelector('video').muted" 
-                    style="width: 100%; background: #00ff00; color: #000; border: none; padding: 10px; font-family: monospace; font-weight: bold; cursor: pointer;">
-                [ TOGGLE_AUDIO_UPLINK ]
-            </button>
-        </div>
+    <div class="monitor">
+        <div class="monitor-label">CAM_01: LAB_PORTAL</div>
+        <div class="rec-light">● REC</div>
+        <video id="portalVideo" autoplay muted loop playsinline preload="metadata">
+            <source src="https://maximumreality.github.io/backdoor/export_1767728050408.mp4#t=0.001" type="video/mp4">
+        </video>
+        <button onclick="var v=document.getElementById('portalVideo'); v.muted=!v.muted; this.innerHTML=v.muted?'[ AUDIO_OFF ]':'[ AUDIO_LIVE ]';" 
+                style="width: 100%; background: #00ff00; color: #000; border: none; padding: 12px; font-family: monospace; font-weight: bold;">
+            [ TOGGLE_AUDIO_UPLINK ]
+        </button>
+    </div>
 
-        <div class="monitor" style="padding: 10px; font-size: 11px; overflow-y: auto; height: auto;">
-            <div class="monitor-label">DATA_LOG: 01-06-2026</div>
-            <p style="margin-top: 20px; color: #00ff00; line-height: 1.4;">
-                <span style="color: #fff;">[SUBJECT]:</span> Azul (Quantum Sphynx)<br>
-                <span style="color: #fff;">[EVENT]:</span> Portal Manifestation<br>
-                <br>
-                <strong>[00:01]</strong> Visual: Stone carving distorts. Blue eyes ignite.<br>
-                <strong>[00:03]</strong> Audio: High-pitched frequency detected.<br>
-                <strong>[00:05]</strong> <span style="background: #00ff00; color: #000;">AZUL: "Ugh... That was the weirdest portal I've ever experienced."</span><br>
-                <strong>[00:08]</strong> Subject stares into CAM_01. Smirk detected.
-            </p>
+    <div class="monitor" style="padding: 15px; background: rgba(0,255,0,0.05); height: auto;">
+        <div class="monitor-label">DATA_LOG: 01-06-2026</div>
+        <div style="margin-top: 15px; font-size: 12px; line-height: 1.5;">
+            <p><span style="color: #fff;">[EVENT]:</span> Portal Manifestation</p>
+            <p><strong>[00:01]</strong> Stone carving distorts. Blue eyes ignite.</p>
+            <p><strong>[00:05]</strong> <span style="background: #00ff00; color: #000; padding: 0 4px;">AZUL: "Ugh... That was the weirdest portal I've ever experienced."</span></p>
+            <p><strong>[00:08]</strong> Subject stares into CAM_01. Smirk detected.</p>
         </div>
     </div>
+</div>
+
 
 
         <div class="monitor">
