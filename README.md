@@ -32,3 +32,7 @@ This directory contains the experimental "Neural Uplinks" and "Surveillance Feed
 
 ---
 **[!] WARNING:** Direct neural interface may result in temporary biometric interference. Proceed at your own risk.
+
+### 🌐 QUICK NAVIGATION
+- **MAINFRAME:** [maximumreality.xyz](https://maximumreality.xyz)
+- **LITTERBOX:** [backdoor/litterbox](https://maximumreality.github.io/backdoor/litterbox.html)
