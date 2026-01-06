@@ -8,7 +8,6 @@
         * { margin: 0; padding: 0; background: #000; color: #0f0; font-family: monospace; }
         body { overflow: hidden; height: 100vh; position: relative; }
 
-        /* CRT OVERLAY */
         .crt-overlay {
             position: fixed; top: 0; left: 0; width: 100%; height: 100%;
             background: linear-gradient(rgba(18, 16, 16, 0) 50%, rgba(0, 0, 0, 0.25) 50%),
@@ -16,46 +15,42 @@
             background-size: 100% 2px, 3px 100%; pointer-events: none; z-index: 10;
         }
 
-        .header { padding: 10px; border-bottom: 1px solid #0f0; display: flex; justify-content: space-between; font-size: 10px; }
+        .header { padding: 10px; border-bottom: 1px solid #0f0; display: flex; justify-content: space-between; font-size: 10px; z-index: 20; position: relative; }
         .rec-dot { width: 8px; height: 8px; background: red; border-radius: 50%; animation: blink 1s infinite; }
         @keyframes blink { 50% { opacity: 0; } }
 
         /* CAMERA GRID */
         .cam-grid {
             display: grid; grid-template-columns: 1fr 1fr; grid-template-rows: 1fr 1fr;
-            height: 85vh; gap: 4px; padding: 4px;
+            height: 85vh; gap: 6px; padding: 10px;
         }
         .cam-feed {
             border: 1px solid #1a1a1a; position: relative; overflow: hidden;
-            display: flex; flex-direction: column; align-items: center; justify-content: center;
+            background: #050505;
         }
         .cam-label { position: absolute; top: 5px; left: 5px; font-size: 8px; background: rgba(0,0,0,0.8); padding: 2px 5px; color: #fff; z-index: 5; }
 
-        .static {
-            position: absolute; width: 100%; height: 100%;
-            background: url('https://media.giphy.com/media/oEI9uWUicfLlC/giphy.gif');
-            background-size: cover; opacity: 0.07; pointer-events: none;
+        .live-vid {
+            width: 100%; height: 100%; object-fit: cover;
+            filter: contrast(1.2) brightness(0.9) grayscale(0.2);
+            opacity: 0.8;
         }
 
-        .data-stream { font-size: 7px; color: #0f0; line-height: 1.4; padding: 10px; overflow: hidden; width: 100%; }
+        .static-overlay {
+            position: absolute; top:0; left:0; width:100%; height:100%;
+            background: url('https://media.giphy.com/media/oEI9uWUicfLlC/giphy.gif');
+            background-size: cover; opacity: 0.05; pointer-events: none;
+        }
 
-        /* REPAIRED EXIT BUTTON */
         .exit-link {
-            position: fixed; bottom: 25px; left: 50%; transform: translateX(-50%);
+            position: fixed; bottom: 20px; left: 50%; transform: translateX(-50%);
             border: 1px solid #0f0; padding: 12px 24px; text-decoration: none; 
             font-size: 10px; color: #0f0; z-index: 100; background: rgba(0,0,0,0.9);
-            letter-spacing: 2px; transition: 0.3s;
-        }
-        .exit-link:active { background: #0f0; color: #000; }
-
-        #noise-floor {
-            position: fixed; top: 0; left: 0; width: 100%; height: 100%;
-            background: #fff; opacity: 0; pointer-events: none; z-index: 1000;
+            letter-spacing: 2px;
         }
     </style>
 </head>
 <body>
-    <div id="noise-floor"></div>
     <div class="crt-overlay"></div>
     
     <div class="header">
@@ -65,66 +60,37 @@
 
     <div class="cam-grid">
         <div class="cam-feed">
-            <span class="cam-label">CAM_01: AZUL_LAB</span>
-            <div class="static"></div>
-            <p style="font-size: 8px; color: #333;">ENCRYPTED_FEED</p>
+            <span class="cam-label">CAM_01: QUANTUM_UPLINK</span>
+            <div class="static-overlay"></div>
+            <video autoplay muted loop playsinline class="live-vid">
+                <source src="cam1.mp4" type="video/mp4">
+            </video>
         </div>
 
         <div class="cam-feed">
-            <span class="cam-label">CAM_02: SNACK_ATTACK</span>
-            <div class="data-stream" id="chef-logs"></div>
+            <span class="cam-label">CAM_02: SNACK_ATTACK_HQ</span>
+            <div class="static-overlay"></div>
+            <video autoplay muted loop playsinline class="live-vid">
+                <source src="cam2.mp4" type="video/mp4">
+            </video>
         </div>
 
         <div class="cam-feed">
-            <span class="cam-label">CAM_03: THE_VAULT</span>
-            <div style="font-size: 30px; opacity: 0.1;">🔒</div>
+            <span class="cam-label">CAM_03: RESTRICTED_AREA</span>
+            <div class="static-overlay"></div>
+            <video autoplay muted loop playsinline class="live-vid">
+                <source src="cam3.mp4" type="video/mp4">
+            </video>
         </div>
 
         <div class="cam-feed">
-            <span class="cam-label">CAM_04: MAIN_NET</span>
-            <canvas id="mini-matrix" style="width:100%; height:100%; opacity:0.2;"></canvas>
+            <span class="cam-label">CAM_04: SECTOR_MAP</span>
+            <div class="static-overlay"></div>
+            <img src="portals.PNG" style="width:100%; height:100%; object-fit:cover; opacity:0.4; filter:hue-rotate(90deg);">
         </div>
     </div>
 
-    <a href="https://maximumreality.xyz/hacked-index.html" class="exit-link" onclick="signalInterference(event)">EXIT_SURVEILLANCE</a>
+    <a href="https://maximumreality.xyz/hacked-index.html" class="exit-link">EXIT_SURVEILLANCE</a>
 
-    <script>
-        // Log simulation
-        const logs = [
-            "SCANNING_RECIPES...", "AZUL_UPLINK_STABLE", "M_SNACK_DETECTED", 
-            "UPDATING_MAINFRAME", "BYPASSING_KITCHEN_LOCK", "SUCCESS"
-        ];
-        let lIdx = 0;
-        setInterval(() => {
-            const d = document.getElementById('chef-logs');
-            d.innerHTML += `> ${logs[lIdx % logs.length]}<br>`;
-            if(d.innerHTML.length > 300) d.innerHTML = "";
-            lIdx++;
-        }, 1200);
-
-        // Matrix cam
-        const cvs = document.getElementById('mini-matrix');
-        const cx = cvs.getContext('2d');
-        cvs.width = 150; cvs.height = 150;
-        const drops = Array(15).fill(1);
-        setInterval(() => {
-            cx.fillStyle = "rgba(0,0,0,0.1)"; cx.fillRect(0,0,150,150);
-            cx.fillStyle = "#0f0"; cx.font = "10px monospace";
-            drops.forEach((y, i) => {
-                cx.fillText("01"[Math.floor(Math.random()*2)], i*10, y*10);
-                if(y*10 > 150) drops[i] = 0;
-                drops[i]++;
-            });
-        }, 100);
-
-        // Transition effect
-        function signalInterference(e) {
-            e.preventDefault();
-            const url = e.target.href;
-            const noise = document.getElementById('noise-floor');
-            noise.style.opacity = "0.5";
-            setTimeout(() => { window.location.href = url; }, 300);
-        }
-    </script>
 </body>
 </html>
