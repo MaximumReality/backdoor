@@ -6,9 +6,9 @@
     <title>RESTRICTED_ACCESS | CCTV_01</title>
     <style>
         * { margin: 0; padding: 0; background: #000; color: #0f0; font-family: monospace; }
-        body { overflow: hidden; height: 100vh; }
+        body { overflow: hidden; height: 100vh; position: relative; }
 
-        /* SCANLINE & VHS EFFECT */
+        /* CRT OVERLAY */
         .crt-overlay {
             position: fixed; top: 0; left: 0; width: 100%; height: 100%;
             background: linear-gradient(rgba(18, 16, 16, 0) 50%, rgba(0, 0, 0, 0.25) 50%),
@@ -16,102 +16,115 @@
             background-size: 100% 2px, 3px 100%; pointer-events: none; z-index: 10;
         }
 
-        .header { padding: 10px; border-bottom: 1px solid #0f0; display: flex; justify-content: space-between; font-size: 12px; }
-        .rec-dot { width: 10px; height: 10px; background: red; border-radius: 50%; animation: blink 1s infinite; }
+        .header { padding: 10px; border-bottom: 1px solid #0f0; display: flex; justify-content: space-between; font-size: 10px; }
+        .rec-dot { width: 8px; height: 8px; background: red; border-radius: 50%; animation: blink 1s infinite; }
         @keyframes blink { 50% { opacity: 0; } }
 
         /* CAMERA GRID */
         .cam-grid {
             display: grid; grid-template-columns: 1fr 1fr; grid-template-rows: 1fr 1fr;
-            height: 90vh; gap: 5px; padding: 5px;
+            height: 85vh; gap: 4px; padding: 4px;
         }
         .cam-feed {
-            border: 1px solid #333; position: relative; overflow: hidden;
-            display: flex; align-items: center; justify-content: center;
+            border: 1px solid #1a1a1a; position: relative; overflow: hidden;
+            display: flex; flex-direction: column; align-items: center; justify-content: center;
         }
-        .cam-label { position: absolute; top: 5px; left: 5px; font-size: 10px; background: rgba(0,0,0,0.7); padding: 2px 5px; }
+        .cam-label { position: absolute; top: 5px; left: 5px; font-size: 8px; background: rgba(0,0,0,0.8); padding: 2px 5px; color: #fff; z-index: 5; }
 
         .static {
-            width: 100%; height: 100%;
+            position: absolute; width: 100%; height: 100%;
             background: url('https://media.giphy.com/media/oEI9uWUicfLlC/giphy.gif');
-            background-size: cover; opacity: 0.1;
+            background-size: cover; opacity: 0.07; pointer-events: none;
         }
 
-        .data-stream { font-size: 8px; color: #0f0; line-height: 1.2; padding: 10px; opacity: 0.7; }
+        .data-stream { font-size: 7px; color: #0f0; line-height: 1.4; padding: 10px; overflow: hidden; width: 100%; }
 
-        /* BUTTON TO EXIT */
-        .abort-btn {
-            position: fixed; bottom: 20px; left: 50%; transform: translateX(-50%);
-            border: 1px solid #0f0; padding: 10px 20px; text-decoration: none; font-size: 10px;
+        /* REPAIRED EXIT BUTTON */
+        .exit-link {
+            position: fixed; bottom: 25px; left: 50%; transform: translateX(-50%);
+            border: 1px solid #0f0; padding: 12px 24px; text-decoration: none; 
+            font-size: 10px; color: #0f0; z-index: 100; background: rgba(0,0,0,0.9);
+            letter-spacing: 2px; transition: 0.3s;
+        }
+        .exit-link:active { background: #0f0; color: #000; }
+
+        #noise-floor {
+            position: fixed; top: 0; left: 0; width: 100%; height: 100%;
+            background: #fff; opacity: 0; pointer-events: none; z-index: 1000;
         }
     </style>
 </head>
 <body>
+    <div id="noise-floor"></div>
     <div class="crt-overlay"></div>
     
     <div class="header">
         <div>LIVE_FEED: SECTOR_ZERO</div>
-        <div style="display:flex; align-items:center; gap:5px;"><div class="rec-dot"></div> REC [2099-01-06]</div>
+        <div style="display:flex; align-items:center; gap:5px;"><div class="rec-dot"></div> REC [2026-01-06]</div>
     </div>
 
     <div class="cam-grid">
         <div class="cam-feed">
-            <span class="cam-label">CAM_01: QUANTUM_LAB</span>
+            <span class="cam-label">CAM_01: AZUL_LAB</span>
             <div class="static"></div>
-            <div style="position:absolute; color:#fff; font-size:10px;">SIGNAL_LOST... RECONNECTING</div>
+            <p style="font-size: 8px; color: #333;">ENCRYPTED_FEED</p>
         </div>
 
         <div class="cam-feed">
-            <span class="cam-label">CAM_02: SNACK_ATTACK_HQ</span>
+            <span class="cam-label">CAM_02: SNACK_ATTACK</span>
             <div class="data-stream" id="chef-logs"></div>
         </div>
 
         <div class="cam-feed">
             <span class="cam-label">CAM_03: THE_VAULT</span>
-            <div class="static" style="opacity: 0.05;"></div>
-            <div style="font-size: 40px; opacity: 0.2;">🔒</div>
+            <div style="font-size: 30px; opacity: 0.1;">🔒</div>
         </div>
 
         <div class="cam-feed">
-            <span class="cam-label">CAM_04: MAIN_HUB</span>
-            <canvas id="mini-matrix" style="width:100%; height:100%; opacity:0.3;"></canvas>
+            <span class="cam-label">CAM_04: MAIN_NET</span>
+            <canvas id="mini-matrix" style="width:100%; height:100%; opacity:0.2;"></canvas>
         </div>
     </div>
 
-    <a href="hacked-index.html" class="abort-btn">EXIT_SURVEILLANCE</a>
+    <a href="https://maximumreality.xyz/hacked-index.html" class="exit-link" onclick="signalInterference(event)">EXIT_SURVEILLANCE</a>
 
     <script>
-        // Fake Chef Logs for Cam 02
+        // Log simulation
         const logs = [
-            "T-MINUS 5: INITIATE_SNACK_ATTACK",
-            "INGREDIENT_SCAN: MICHELIN_STAR_CATNIP",
-            "TEMPERATURE_STABILIZED: 180°C",
-            "CHAOS_FACTOR: OPTIMAL",
-            "MOCHKIL_ID: VERIFIED",
-            ">>> STEALING_CHICKEN_LIVER_SUCCESS"
+            "SCANNING_RECIPES...", "AZUL_UPLINK_STABLE", "M_SNACK_DETECTED", 
+            "UPDATING_MAINFRAME", "BYPASSING_KITCHEN_LOCK", "SUCCESS"
         ];
-        let i = 0;
+        let lIdx = 0;
         setInterval(() => {
-            const div = document.getElementById('chef-logs');
-            div.innerHTML += logs[i % logs.length] + "<br>";
-            if(div.innerHTML.length > 500) div.innerHTML = "";
-            i++;
-        }, 1500);
+            const d = document.getElementById('chef-logs');
+            d.innerHTML += `> ${logs[lIdx % logs.length]}<br>`;
+            if(d.innerHTML.length > 300) d.innerHTML = "";
+            lIdx++;
+        }, 1200);
 
-        // Mini Matrix for Cam 04
-        const canvas = document.getElementById('mini-matrix');
-        const ctx = canvas.getContext('2d');
-        canvas.width = 200; canvas.height = 200;
-        const drops = Array(20).fill(1);
+        // Matrix cam
+        const cvs = document.getElementById('mini-matrix');
+        const cx = cvs.getContext('2d');
+        cvs.width = 150; cvs.height = 150;
+        const drops = Array(15).fill(1);
         setInterval(() => {
-            ctx.fillStyle = "rgba(0,0,0,0.1)"; ctx.fillRect(0,0,200,200);
-            ctx.fillStyle = "#0f0";
+            cx.fillStyle = "rgba(0,0,0,0.1)"; cx.fillRect(0,0,150,150);
+            cx.fillStyle = "#0f0"; cx.font = "10px monospace";
             drops.forEach((y, i) => {
-                ctx.fillText(Math.random() > 0.5 ? "1" : "0", i*10, y*10);
-                if(y*10 > 200) drops[i] = 0;
+                cx.fillText("01"[Math.floor(Math.random()*2)], i*10, y*10);
+                if(y*10 > 150) drops[i] = 0;
                 drops[i]++;
             });
         }, 100);
+
+        // Transition effect
+        function signalInterference(e) {
+            e.preventDefault();
+            const url = e.target.href;
+            const noise = document.getElementById('noise-floor');
+            noise.style.opacity = "0.5";
+            setTimeout(() => { window.location.href = url; }, 300);
+        }
     </script>
 </body>
 </html>
