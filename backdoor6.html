@@ -112,6 +112,24 @@ function captureCC() {
 
 window.onload = startBreach;
 
+        function moneyRain() {
+    for (let i = 0; i < 15; i++) {
+        let coin = document.createElement('div');
+        coin.innerText = '💸';
+        coin.style.position = 'absolute';
+        coin.style.left = Math.random() * 100 + 'vw';
+        coin.style.top = '-50px';
+        coin.style.fontSize = '2rem';
+        coin.style.transition = 'top 2s linear';
+        document.body.appendChild(coin);
+        
+        setTimeout(() => {
+            coin.style.top = '110vh';
+        }, 100);
+    }
+}
+
+
     </script>
 </body>
 </html>
