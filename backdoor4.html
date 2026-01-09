@@ -21,28 +21,32 @@
             overflow-x: hidden;
             line-height: 1.4;
         }
-#video-bg {
-    position: fixed;
-    right: 0;
-    bottom: 0;
-    min-width: 100%;
-    min-height: 100%;
-    z-index: -1; /* Puts it behind the text */
-    opacity: 0.3; /* Makes text readable */
-    filter: grayscale(100%) contrast(150%);
-    pointer-events: none;
-}
+
+        #video-bg {
+            position: fixed;
+            right: 0;
+            bottom: 0;
+            min-width: 100%;
+            min-height: 100%;
+            width: auto;
+            height: auto;
+            z-index: -1;
+            opacity: 0.3;
+            filter: grayscale(100%) contrast(150%);
+            object-fit: cover; /* Ensures it fills the iPhone screen perfectly */
+            pointer-events: none;
+        }
 
         #terminal {
             max-width: 800px;
             margin: 0 auto;
             border: 1px solid #333;
             padding: 20px;
+            background: rgba(10, 10, 10, 0.7); /* Adds slight contrast against the video */
             box-shadow: 0 0 15px rgba(0, 242, 255, 0.1);
         }
 
         .system-msg { color: var(--terminal-green); text-shadow: 0 0 5px var(--terminal-green); }
-        .highlight { color: var(--neon-pink); }
         .cursor {
             display: inline-block;
             width: 10px;
@@ -53,7 +57,6 @@
 
         @keyframes blink { 0%, 49% { opacity: 1; } 50%, 100% { opacity: 0; } }
 
-        /* The Glitch Button */
         .glyph-container {
             text-align: center;
             margin-top: 40px;
@@ -73,11 +76,7 @@
             box-shadow: 0 0 10px var(--neon-pink);
         }
 
-        @keyframes pulse {
-            0%, 100% { transform: scale(1); }
-            50% { transform: scale(1.05); }
-        }
-
+        @keyframes pulse { 0%, 100% { transform: scale(1); } 50% { transform: scale(1.05); } }
         @keyframes glitch-flicker {
             0%, 95%, 100% { opacity: 1; }
             96% { opacity: 0.3; transform: skewX(10deg); }
@@ -89,10 +88,10 @@
     </style>
 </head>
 <body>
-    <video autoplay muted loop id="video-bg">
-    <source src="https://maximumreality.github.io/backdoor/interference.mp4" type="video/mp4">
-</video>
 
+    <video autoplay muted loop playsinline id="video-bg">
+        <source src="https://maximumreality.github.io/backdoor/interference.mp4" type="video/mp4">
+    </video>
 
 <div id="terminal">
     <div id="output"></div>
@@ -138,18 +137,13 @@ SYSTEM HALTED.`;
     function typeWriter() {
         if (i < content.length) {
             let char = content.charAt(i);
-            
-            // Check for tags to colorize headers
             if (content.substring(i, i+1) === '[') output.innerHTML += '<span class="system-msg">';
-            
             if (char === '\n') {
                 output.innerHTML += '<br>';
             } else {
                 output.innerHTML += char;
             }
-            
             if (char === ']') output.innerHTML += '</span>';
-
             i++;
             window.scrollTo(0, document.body.scrollHeight);
             setTimeout(typeWriter, 20); 
