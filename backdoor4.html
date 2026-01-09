@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>SYSTEM_OVERRIDE_004</title>
+    <title>BACKDOOR_PROTOCOL_v.2.026</title>
     <style>
         :root {
             --neon-pink: #ff00ff;
@@ -27,31 +27,54 @@
             margin: 0 auto;
             border: 1px solid #333;
             padding: 20px;
-            box-shadow: 0 0 15px rgba(0, 242, 255, 0.2);
+            box-shadow: 0 0 15px rgba(0, 242, 255, 0.1);
         }
 
+        .system-msg { color: var(--terminal-green); text-shadow: 0 0 5px var(--terminal-green); }
+        .highlight { color: var(--neon-pink); }
         .cursor {
             display: inline-block;
             width: 10px;
             height: 20px;
             background-color: var(--neon-blue);
             animation: blink 1s infinite;
-            vertical-align: middle;
         }
 
-        @keyframes blink {
-            0%, 49% { opacity: 1; }
-            50%, 100% { opacity: 0; }
+        @keyframes blink { 0%, 49% { opacity: 1; } 50%, 100% { opacity: 0; } }
+
+        /* The Glitch Button */
+        .glyph-container {
+            text-align: center;
+            margin-top: 40px;
+            opacity: 0;
+            transition: opacity 1.5s ease-in;
         }
 
-        .highlight { color: var(--neon-pink); font-weight: bold; }
-        .system-msg { color: var(--terminal-green); }
-        pre { white-space: pre-wrap; word-wrap: break-word; }
-
-        /* Mobile Optimization for your iPhone 14 Pro Max */
-        @media (max-width: 600px) {
-            body { font-size: 14px; padding: 10px; }
+        .pink-glyph {
+            display: inline-block;
+            padding: 15px 25px;
+            border: 2px solid var(--neon-pink);
+            color: var(--neon-pink);
+            text-decoration: none;
+            font-weight: bold;
+            letter-spacing: 2px;
+            animation: pulse 2s infinite, glitch-flicker 4s infinite;
+            box-shadow: 0 0 10px var(--neon-pink);
         }
+
+        @keyframes pulse {
+            0%, 100% { transform: scale(1); }
+            50% { transform: scale(1.05); }
+        }
+
+        @keyframes glitch-flicker {
+            0%, 95%, 100% { opacity: 1; }
+            96% { opacity: 0.3; transform: skewX(10deg); }
+            97% { opacity: 1; transform: skewX(0); }
+            98% { opacity: 0.5; }
+        }
+
+        @media (max-width: 600px) { body { font-size: 14px; padding: 10px; } }
     </style>
 </head>
 <body>
@@ -59,25 +82,37 @@
 <div id="terminal">
     <div id="output"></div>
     <span class="cursor"></span>
+    
+    <div id="glyph-box" class="glyph-container">
+        <a href="https://maximumreality.xyz/signal.html" class="pink-glyph">◣ ACCESS_SIGNAL_FEED ◢</a>
+    </div>
 </div>
 
 <script>
     const content = `[SYSTEM ACCESS GRANTED]
+[LOCATION: AGADIR_HUB_NODE]
 [ARCHIVE: MAX_REALITY_MANIFESTO]
-[STATUS: ENCRYPTED // DEPLOYED]
 
 >_ VISION.LOG
 The tether is severed. We build the future on 6.7 inches of glass.
+No towers. No desks. Just raw logic and mobile-first architecture.
 
 >_ THE_OPERATIVES
 {
   "Architect": "Maximum Reality Digital Creator",
-  "Quantum_Lead": "Azul",
-  "Chaos_Chef": "Mochkil"
+  "Quantum_Lead": "Azul [Sphynx/Hacker]",
+  "Chaos_Chef": "Mochkil [Tuxedo/Chef]"
 }
 
->_ INITIALIZING_PORTAL...
-Reality is a variable. Adjust yours at MaximumReality.xyz.
+>_ CORE_TECH_STACK
+- Language: HTML5 / CSS3 / JavaScript / JSON
+- Hardware: iPhone 14 Pro Max
+- Status: Signal Interference Detected...
+
+>_ THE_RULES
+1. THE CODE IS THE CANVAS.
+2. CYBERPUNK IS REALITY.
+3. CHAOS IS REQUIRED.
 
 [EOF]
 SYSTEM HALTED.`;
@@ -89,26 +124,22 @@ SYSTEM HALTED.`;
         if (i < content.length) {
             let char = content.charAt(i);
             
-            // Logic to colorize specific parts
-            if (content.substring(i, i + 1).includes('[')) {
-                output.innerHTML += '<span class="system-msg">';
-            }
+            // Check for tags to colorize headers
+            if (content.substring(i, i+1) === '[') output.innerHTML += '<span class="system-msg">';
             
             if (char === '\n') {
                 output.innerHTML += '<br>';
             } else {
                 output.innerHTML += char;
             }
-
-            // Close the span if we hit a bracket or newline to keep colors contained
-            if (char === ']' || char === '\n') {
-                output.innerHTML += '</span>';
-            }
+            
+            if (char === ']') output.innerHTML += '</span>';
 
             i++;
             window.scrollTo(0, document.body.scrollHeight);
-            // Speed up for Morocco's peak internet hour!
-            setTimeout(typeWriter, 10); 
+            setTimeout(typeWriter, 20); 
+        } else {
+            document.getElementById('glyph-box').style.opacity = '1';
         }
     }
 
