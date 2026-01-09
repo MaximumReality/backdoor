@@ -53,35 +53,47 @@
 </head>
 <body>
     <div id="desktop">
+        <div id="boot-text">Initializing SYSTEM_BREACH_V5...</div>
         <div id="popup-container"></div>
+
         <div id="scanner-window" class="hidden">
-            <div class="header">CAT_SCAN_PRO_V2.0 (Azul-Edition)</div>
+            <div class="header">CAT_SCAN_PRO_V2.0 (Azul‑Edition)</div>
             <div id="scan-log"></div>
         </div>
     </div>
-    <div id="bsod" class="hidden">C:\> _</div>
-    
+
+    <div id="bsod" class="hidden">
+        C:\> YOU WOULDNT DOWNLOAD A CAT
+    </div>
+
+    <div id="start-overlay">CLICK TO START SYSTEM</div>
+
     <audio id="sfx-ching" src="https://www.soundjay.com/misc/sounds/cash-register-05.mp3"></audio>
-    <script src="script.js"></script>
-    <script>
-        const sites = ["fakebook.com", "gooqle.com", "onlyfams.com", "instagran.com"];
+
+<script>
+const sites = ["fakebook.com", "gooqle.com", "onlyfams.com", "instagran.com"];
 const log = document.getElementById('scan-log');
 const ching = document.getElementById('sfx-ching');
 
+document.getElementById('start-overlay').onclick = () => {
+    document.getElementById('start-overlay').remove();
+    startBreach();
+};
+
 function startBreach() {
-    // 1. Spawn Popups
+    // Spawn Popups
     for (let i = 0; i < 8; i++) {
         setTimeout(() => {
             let p = document.createElement('div');
             p.className = 'popup';
             p.style.top = Math.random() * 80 + 'vh';
             p.style.left = Math.random() * 80 + 'vw';
-            p.innerText = "WARNING: evil_spawn.exe detected!";
+            p.innerText = "⚠ WARNING: evil_spawn.exe detected!";
             document.getElementById('popup-container').appendChild(p);
-        }, i * 200);
+        }, i * 250);
     }
 
-    // 2. Start File Scan
+    // Start Scan
     setTimeout(() => {
         document.getElementById('scanner-window').classList.remove('hidden');
         let i = 0;
@@ -93,43 +105,63 @@ function startBreach() {
                 clearInterval(interval);
                 captureCC();
             }
-        }, 800);
-    }, 2000);
+        }, 700);
+    }, 1800);
 }
 
 function captureCC() {
     log.innerHTML += `<br><span style="color:red">SENSITIVE DATA FOUND:</span><br>`;
     log.innerHTML += `CARD: 4532 **** **** ${Math.floor(Math.random()*9999)}<br>`;
-    log.innerHTML += `<span style="font-size: 1.5rem;">CAPTURED!</span>`;
-    
-    ching.play(); // Cha-Ching!
+    log.innerHTML += `<span style="font-size:1.4rem">CAPTURED!</span>`;
 
-    // 3. Fade to Black/C://
+    ching.play().catch(()=>{});
+    moneyRain();
+
     setTimeout(() => {
         document.getElementById('bsod').classList.remove('hidden');
-    }, 2500);
+    }, 2200);
 }
 
-window.onload = startBreach;
-
-        function moneyRain() {
-    for (let i = 0; i < 15; i++) {
+function moneyRain() {
+    for (let i = 0; i < 20; i++) {
         let coin = document.createElement('div');
         coin.innerText = '💸';
-        coin.style.position = 'absolute';
+        coin.style.position = 'fixed';
         coin.style.left = Math.random() * 100 + 'vw';
         coin.style.top = '-50px';
         coin.style.fontSize = '2rem';
         coin.style.transition = 'top 2s linear';
         document.body.appendChild(coin);
-        
-        setTimeout(() => {
-            coin.style.top = '110vh';
-        }, 100);
+        setTimeout(() => coin.style.top = '110vh', 100);
     }
-};
+}
+</script>
 
+<style>
+#boot-text {
+    padding: 20px;
+    color: #0f0;
+    font-size: 1.2rem;
+}
 
-    </script>
+#start-overlay {
+    position: fixed;
+    inset: 0;
+    background: black;
+    color: #0f0;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 2rem;
+    cursor: pointer;
+    z-index: 2000;
+}
+
+.popup {
+    background: #300;
+    border: 2px solid red;
+    animation: fadeOut 3s forwards;
+}
+</style>
 </body>
 </html>
