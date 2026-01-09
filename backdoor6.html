@@ -5,7 +5,6 @@
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>SYSTEM_BREACH_V5</title>
 <style>
-/* Body and general styling */
 body { 
     background: #000; 
     color: #0f0; 
@@ -43,7 +42,16 @@ body {
     background: #300;
     border: 2px solid red;
     color: #fff;
-    animation: fadeOut 3s forwards;
+    animation: fadeOut 3s forwards, shake 0.5s infinite alternate;
+}
+
+/* Popup shake */
+@keyframes shake {
+    0% { transform: translate(0px, 0px) rotate(0deg); }
+    25% { transform: translate(2px, -2px) rotate(-2deg); }
+    50% { transform: translate(-2px, 2px) rotate(2deg); }
+    75% { transform: translate(2px, 2px) rotate(-1deg); }
+    100% { transform: translate(-2px, -2px) rotate(1deg); }
 }
 
 @keyframes fadeOut {
@@ -75,6 +83,7 @@ body {
     padding-left: 20px;
     font-size: 2rem;
     z-index: 1000;
+    white-space: pre-line;
     display: none;
 }
 
@@ -100,17 +109,19 @@ body {
 #azul {
     position: fixed;
     bottom: 20px;
-    right: -200px; /* start off screen */
+    right: -200px;
     width: 160px;
     background: rgba(0,0,0,0.8);
     border: 2px solid #0f0;
     padding: 10px;
     z-index: 1500;
     transition: right 0.5s ease-out;
+    transform-origin: center;
 }
 
 #azul img {
     width: 100%;
+    transition: transform 0.2s ease;
 }
 
 .azul-text {
@@ -118,7 +129,6 @@ body {
     font-size: 0.9rem;
     color: #0f0;
 }
-
 </style>
 </head>
 <body>
@@ -132,7 +142,7 @@ body {
     </div>
 </div>
 
-<div id="bsod">C:\> SYSTEM COMPROMISED BY CAT<br>C:\> PRESS ESCAPE IRL</div>
+<div id="bsod"></div>
 
 <div id="azul">
     <img src="https://maximumreality.github.io/WhiskerBytesCatCafe/critic.png" alt="Azul">
@@ -149,6 +159,9 @@ body {
 const sites = ["fakebook.com", "gooqle.com", "onlyfams.com", "instagran.com"];
 const log = document.getElementById('scan-log');
 const ching = document.getElementById('sfx-ching');
+const azul = document.getElementById('azul');
+const azulImg = azul.querySelector('img');
+const bsod = document.getElementById('bsod');
 
 document.getElementById('start-overlay').onclick = () => {
     document.getElementById('start-overlay').remove();
@@ -158,7 +171,8 @@ document.getElementById('start-overlay').onclick = () => {
 function startBreach() {
     // Slide in Azul
     setTimeout(() => {
-        document.getElementById('azul').style.right = '20px';
+        azul.style.right = '20px';
+        blinkAzul();
     }, 1200);
 
     // Popups
@@ -170,14 +184,15 @@ function startBreach() {
             p.style.left = Math.random() * 80 + 'vw';
             p.innerText = "⚠ WARNING: evil_spawn.exe detected!";
             document.getElementById('popup-container').appendChild(p);
+            azulReact(); // Azul reacts to popups
         }, i * 250);
     }
 
     // Start Scan
     setTimeout(() => {
         document.getElementById('scanner-window').style.display = 'block';
+        azulText("Scanning your bad decisions...");
         let i = 0;
-        document.querySelector('.azul-text').innerText = "Scanning your bad decisions...";
         let interval = setInterval(() => {
             if (i < sites.length) {
                 log.innerHTML += `> Accessing history: ${sites[i]}... DONE<br>`;
@@ -194,14 +209,15 @@ function captureCC() {
     log.innerHTML += `<br><span style="color:red">SENSITIVE DATA FOUND:</span><br>`;
     log.innerHTML += `CARD: 4532 **** **** ${Math.floor(Math.random()*9999)}<br>`;
     log.innerHTML += `<span style="font-size:1.4rem">CAPTURED!</span>`;
-    document.querySelector('.azul-text').innerText = "Oh no. That's not good.";
+    azulText("Oh no. That's not good.");
     
     ching.play().catch(()=>{});
     moneyRain();
 
-    setTimeout(() => {
-        document.getElementById('bsod').style.display = 'flex';
-    }, 2200);
+    // Type BSOD
+    const bsodText = "C:\\> SYSTEM COMPROMISED BY CAT\nC:\\> PRESS ESCAPE IRL";
+    bsod.style.display = "flex";
+    typeBSOD(bsodText, 0);
 }
 
 function moneyRain() {
@@ -211,13 +227,38 @@ function moneyRain() {
         coin.style.position = 'fixed';
         coin.style.left = Math.random() * 100 + 'vw';
         coin.style.top = '-50px';
-        coin.style.fontSize = '2rem';
-        coin.style.transition = 'top 2s linear';
+        coin.style.fontSize = (1 + Math.random()*2) + 'rem';
+        coin.style.transition = `top ${1.5 + Math.random()}s linear, transform ${1 + Math.random()}s ease`;
+        coin.style.transform = `rotate(${Math.random()*360}deg)`;
         document.body.appendChild(coin);
         setTimeout(() => coin.style.top = '110vh', 100);
     }
 }
-</script>
 
+// Azul helpers
+function azulText(txt) {
+    azul.querySelector('.azul-text').innerText = txt;
+}
+
+function blinkAzul() {
+    setInterval(() => {
+        azulImg.style.transform = "scale(0.95) rotate(-2deg)";
+        setTimeout(()=>{azulImg.style.transform = "scale(1) rotate(0deg)";},100);
+    }, 1000);
+}
+
+function azulReact() {
+    azulImg.style.transform = `scale(1.05) rotate(${(Math.random()-0.5)*10}deg)`;
+    setTimeout(()=>{azulImg.style.transform = "scale(1) rotate(0deg)";},150);
+}
+
+// BSOD typing effect
+function typeBSOD(text, i) {
+    if (i < text.length) {
+        bsod.innerText += text.charAt(i);
+        setTimeout(()=> typeBSOD(text, i+1), 50);
+    }
+}
+</script>
 </body>
 </html>
