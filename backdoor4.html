@@ -21,6 +21,17 @@
             overflow-x: hidden;
             line-height: 1.4;
         }
+#video-bg {
+    position: fixed;
+    right: 0;
+    bottom: 0;
+    min-width: 100%;
+    min-height: 100%;
+    z-index: -1; /* Puts it behind the text */
+    opacity: 0.3; /* Makes text readable */
+    filter: grayscale(100%) contrast(150%);
+    pointer-events: none;
+}
 
         #terminal {
             max-width: 800px;
@@ -78,6 +89,10 @@
     </style>
 </head>
 <body>
+    <video autoplay muted loop id="video-bg">
+    <source src="https://maximumreality.github.io/backdoor/interference.mp4" type="video/mp4">
+</video>
+
 
 <div id="terminal">
     <div id="output"></div>
