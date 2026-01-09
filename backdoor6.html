@@ -1,21 +1,49 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>SYSTEM_BREACH_V5</title>
-    <link rel="stylesheet" href="style.css">
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>SYSTEM_BREACH_V5</title>
 <style>
-    body { background: #000; color: #0f0; font-family: 'Courier New', monospace; overflow: hidden; margin: 0; }
+/* Body and general styling */
+body { 
+    background: #000; 
+    color: #0f0; 
+    font-family: 'Courier New', monospace; 
+    overflow: hidden; 
+    margin: 0; 
+}
 
+/* Boot text */
+#boot-text {
+    padding: 20px;
+    color: #0f0;
+    font-size: 1.2rem;
+}
+
+/* Start overlay */
+#start-overlay {
+    position: fixed;
+    inset: 0;
+    background: black;
+    color: #0f0;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 2rem;
+    cursor: pointer;
+    z-index: 2000;
+}
+
+/* Popups */
 .popup {
     position: absolute;
     width: 200px;
     padding: 10px;
-    background: #222;
-    border: 2px solid #f00;
+    background: #300;
+    border: 2px solid red;
     color: #fff;
-    animation: fadeOut 2s forwards;
+    animation: fadeOut 3s forwards;
 }
 
 @keyframes fadeOut {
@@ -24,6 +52,7 @@
     100% { opacity: 0; transform: scale(0.8); }
 }
 
+/* Scanner window */
 #scanner-window {
     width: 90%;
     height: 300px;
@@ -31,8 +60,10 @@
     margin: 20px auto;
     background: rgba(0, 40, 0, 0.9);
     padding: 10px;
+    display: none;
 }
 
+/* BSOD */
 #bsod {
     position: fixed;
     top: 0; left: 0; width: 100vw; height: 100vh;
@@ -44,31 +75,75 @@
     padding-left: 20px;
     font-size: 2rem;
     z-index: 1000;
+    display: none;
 }
 
-.hidden { display: none !important; }
+/* ESCAPE button */
+#escape-btn {
+    position: fixed;
+    top: 10px;
+    left: 10px;
+    padding: 8px 12px;
+    border: 1px solid #0f0;
+    color: #0f0;
+    text-decoration: none;
+    font-size: 0.9rem;
+    background: rgba(0,0,0,0.8);
+    z-index: 2000;
+}
+#escape-btn:hover {
+    background: #0f0;
+    color: black;
+}
+
+/* Azul Clippy helper */
+#azul {
+    position: fixed;
+    bottom: 20px;
+    right: -200px; /* start off screen */
+    width: 160px;
+    background: rgba(0,0,0,0.8);
+    border: 2px solid #0f0;
+    padding: 10px;
+    z-index: 1500;
+    transition: right 0.5s ease-out;
+}
+
+#azul img {
+    width: 100%;
+}
+
+.azul-text {
+    margin-top: 5px;
+    font-size: 0.9rem;
+    color: #0f0;
+}
 
 </style>
-
 </head>
 <body>
-    <div id="desktop">
-        <div id="boot-text">Initializing SYSTEM_BREACH_V5...</div>
-        <div id="popup-container"></div>
 
-        <div id="scanner-window" class="hidden">
-            <div class="header">CAT_SCAN_PRO_V2.0 (Azul‑Edition)</div>
-            <div id="scan-log"></div>
-        </div>
+<div id="desktop">
+    <div id="boot-text">Initializing SYSTEM_BREACH_V5...</div>
+    <div id="popup-container"></div>
+    <div id="scanner-window">
+        <div class="header">CAT_SCAN_PRO_V2.0 (Azul-Edition)</div>
+        <div id="scan-log"></div>
     </div>
+</div>
 
-    <div id="bsod" class="hidden">
-        C:\> YOU WOULDNT DOWNLOAD A CAT
-    </div>
+<div id="bsod">C:\> SYSTEM COMPROMISED BY CAT<br>C:\> PRESS ESCAPE IRL</div>
 
-    <div id="start-overlay">CLICK TO START SYSTEM</div>
+<div id="azul">
+    <img src="https://maximumreality.github.io/WhiskerBytesCatCafe/critic.png" alt="Azul">
+    <div class="azul-text">Hi! I see you're being hacked 😺</div>
+</div>
 
-    <audio id="sfx-ching" src="https://www.soundjay.com/misc/sounds/cash-register-05.mp3"></audio>
+<a id="escape-btn" href="https://maximumreality.xyz">⏎ ESCAPE SYSTEM</a>
+
+<div id="start-overlay">CLICK TO START SYSTEM</div>
+
+<audio id="sfx-ching" src="https://www.soundjay.com/misc/sounds/cash-register-05.mp3"></audio>
 
 <script>
 const sites = ["fakebook.com", "gooqle.com", "onlyfams.com", "instagran.com"];
@@ -81,7 +156,12 @@ document.getElementById('start-overlay').onclick = () => {
 };
 
 function startBreach() {
-    // Spawn Popups
+    // Slide in Azul
+    setTimeout(() => {
+        document.getElementById('azul').style.right = '20px';
+    }, 1200);
+
+    // Popups
     for (let i = 0; i < 8; i++) {
         setTimeout(() => {
             let p = document.createElement('div');
@@ -95,8 +175,9 @@ function startBreach() {
 
     // Start Scan
     setTimeout(() => {
-        document.getElementById('scanner-window').classList.remove('hidden');
+        document.getElementById('scanner-window').style.display = 'block';
         let i = 0;
+        document.querySelector('.azul-text').innerText = "Scanning your bad decisions...";
         let interval = setInterval(() => {
             if (i < sites.length) {
                 log.innerHTML += `> Accessing history: ${sites[i]}... DONE<br>`;
@@ -113,12 +194,13 @@ function captureCC() {
     log.innerHTML += `<br><span style="color:red">SENSITIVE DATA FOUND:</span><br>`;
     log.innerHTML += `CARD: 4532 **** **** ${Math.floor(Math.random()*9999)}<br>`;
     log.innerHTML += `<span style="font-size:1.4rem">CAPTURED!</span>`;
-
+    document.querySelector('.azul-text').innerText = "Oh no. That's not good.";
+    
     ching.play().catch(()=>{});
     moneyRain();
 
     setTimeout(() => {
-        document.getElementById('bsod').classList.remove('hidden');
+        document.getElementById('bsod').style.display = 'flex';
     }, 2200);
 }
 
@@ -137,31 +219,5 @@ function moneyRain() {
 }
 </script>
 
-<style>
-#boot-text {
-    padding: 20px;
-    color: #0f0;
-    font-size: 1.2rem;
-}
-
-#start-overlay {
-    position: fixed;
-    inset: 0;
-    background: black;
-    color: #0f0;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    font-size: 2rem;
-    cursor: pointer;
-    z-index: 2000;
-}
-
-.popup {
-    background: #300;
-    border: 2px solid red;
-    animation: fadeOut 3s forwards;
-}
-</style>
 </body>
 </html>
