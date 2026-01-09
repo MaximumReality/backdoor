@@ -1,0 +1,119 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>SYSTEM_OVERRIDE_004</title>
+    <style>
+        :root {
+            --neon-pink: #ff00ff;
+            --neon-blue: #00f2ff;
+            --terminal-green: #00ff41;
+            --bg-black: #0a0a0a;
+        }
+
+        body {
+            background-color: var(--bg-black);
+            color: var(--neon-blue);
+            font-family: 'Courier New', Courier, monospace;
+            margin: 0;
+            padding: 20px;
+            overflow-x: hidden;
+            line-height: 1.4;
+        }
+
+        #terminal {
+            max-width: 800px;
+            margin: 0 auto;
+            border: 1px solid #333;
+            padding: 20px;
+            box-shadow: 0 0 15px rgba(0, 242, 255, 0.2);
+        }
+
+        .cursor {
+            display: inline-block;
+            width: 10px;
+            height: 20px;
+            background-color: var(--neon-blue);
+            animation: blink 1s infinite;
+            vertical-align: middle;
+        }
+
+        @keyframes blink {
+            0%, 49% { opacity: 1; }
+            50%, 100% { opacity: 0; }
+        }
+
+        .highlight { color: var(--neon-pink); font-weight: bold; }
+        .system-msg { color: var(--terminal-green); }
+        pre { white-space: pre-wrap; word-wrap: break-word; }
+
+        /* Mobile Optimization for your iPhone 14 Pro Max */
+        @media (max-width: 600px) {
+            body { font-size: 14px; padding: 10px; }
+        }
+    </style>
+</head>
+<body>
+
+<div id="terminal">
+    <div id="output"></div>
+    <span class="cursor"></span>
+</div>
+
+<script>
+    const content = `[SYSTEM ACCESS GRANTED]
+[ARCHIVE: MAX_REALITY_MANIFESTO]
+[STATUS: ENCRYPTED // DEPLOYED]
+
+>_ VISION.LOG
+The tether is severed. We build the future on 6.7 inches of glass.
+
+>_ THE_OPERATIVES
+{
+  "Architect": "Maximum Reality Digital Creator",
+  "Quantum_Lead": "Azul",
+  "Chaos_Chef": "Mochkil"
+}
+
+>_ INITIALIZING_PORTAL...
+Reality is a variable. Adjust yours at MaximumReality.xyz.
+
+[EOF]
+SYSTEM HALTED.`;
+
+    const output = document.getElementById('output');
+    let i = 0;
+
+    function typeWriter() {
+        if (i < content.length) {
+            let char = content.charAt(i);
+            
+            // Logic to colorize specific parts
+            if (content.substring(i, i + 1).includes('[')) {
+                output.innerHTML += '<span class="system-msg">';
+            }
+            
+            if (char === '\n') {
+                output.innerHTML += '<br>';
+            } else {
+                output.innerHTML += char;
+            }
+
+            // Close the span if we hit a bracket or newline to keep colors contained
+            if (char === ']' || char === '\n') {
+                output.innerHTML += '</span>';
+            }
+
+            i++;
+            window.scrollTo(0, document.body.scrollHeight);
+            // Speed up for Morocco's peak internet hour!
+            setTimeout(typeWriter, 10); 
+        }
+    }
+
+    window.onload = typeWriter;
+</script>
+
+</body>
+</html>
