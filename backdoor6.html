@@ -63,5 +63,55 @@
     
     <audio id="sfx-ching" src="https://www.soundjay.com/misc/sounds/cash-register-05.mp3"></audio>
     <script src="script.js"></script>
+    <script>
+        const sites = ["fakebook.com", "gooqle.com", "onlyfams.com", "instagran.com"];
+const log = document.getElementById('scan-log');
+const ching = document.getElementById('sfx-ching');
+
+function startBreach() {
+    // 1. Spawn Popups
+    for (let i = 0; i < 8; i++) {
+        setTimeout(() => {
+            let p = document.createElement('div');
+            p.className = 'popup';
+            p.style.top = Math.random() * 80 + 'vh';
+            p.style.left = Math.random() * 80 + 'vw';
+            p.innerText = "WARNING: evil_spawn.exe detected!";
+            document.getElementById('popup-container').appendChild(p);
+        }, i * 200);
+    }
+
+    // 2. Start File Scan
+    setTimeout(() => {
+        document.getElementById('scanner-window').classList.remove('hidden');
+        let i = 0;
+        let interval = setInterval(() => {
+            if (i < sites.length) {
+                log.innerHTML += `> Accessing history: ${sites[i]}... DONE<br>`;
+                i++;
+            } else {
+                clearInterval(interval);
+                captureCC();
+            }
+        }, 800);
+    }, 2000);
+}
+
+function captureCC() {
+    log.innerHTML += `<br><span style="color:red">SENSITIVE DATA FOUND:</span><br>`;
+    log.innerHTML += `CARD: 4532 **** **** ${Math.floor(Math.random()*9999)}<br>`;
+    log.innerHTML += `<span style="font-size: 1.5rem;">CAPTURED!</span>`;
+    
+    ching.play(); // Cha-Ching!
+
+    // 3. Fade to Black/C://
+    setTimeout(() => {
+        document.getElementById('bsod').classList.remove('hidden');
+    }, 2500);
+}
+
+window.onload = startBreach;
+
+    </script>
 </body>
 </html>
