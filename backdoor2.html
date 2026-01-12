@@ -20,6 +20,11 @@
         .header { border-bottom: 2px solid var(--vault-green); padding-bottom: 15px; margin-bottom: 30px; }
         .warning { color: var(--alert-red); font-weight: 900; animation: blink 1s infinite; }
         @keyframes blink { 50% { opacity: 0; } }
+body { 
+    height: 100vh; 
+    overflow: hidden; 
+    padding-bottom: env(safe-area-inset-bottom); /* Protects the Exit button from the home bar */
+}
 
         /* FILE LIST */
         .file-list { list-style: none; flex-grow: 1; }
@@ -94,24 +99,32 @@
 
     <script>
         function openFile(fileName) {
-            const overlay = document.getElementById('loading-overlay');
-            const bar = document.getElementById('bar');
-            overlay.style.display = 'flex';
-            
-            let width = 0;
-            const interval = setInterval(() => {
-                if (width >= 100) {
-                    clearInterval(interval);
-                    alert("ERROR: ENCRYPTION_TOO_STRONG. \n\n'"+fileName+"' requires biometric paw-print of Azul to view.");
-                    overlay.style.display = 'none';
-                    width = 0;
-                    bar.style.width = "0%";
-                } else {
-                    width += 5;
-                    bar.style.width = width + "%";
-                }
-            }, 50);
+    if(fileName === 'SECTOR_ZERO_PASSCODES.key') {
+        // This is a secret backdoor!
+        alert("CRITICAL BREACH: Accessing Sector Zero passcodes... Redirecting to Secure Uplink.");
+        window.location.href = "https://maximumreality.github.io/space/"; 
+        return;
+    }
+
+    const overlay = document.getElementById('loading-overlay');
+    const bar = document.getElementById('bar');
+    overlay.style.display = 'flex';
+    
+    let width = 0;
+    const interval = setInterval(() => {
+        if (width >= 100) {
+            clearInterval(interval);
+            alert("ERROR: ENCRYPTION_TOO_STRONG. \n\n'"+fileName+"' requires biometric paw-print of Azul to view.");
+            overlay.style.display = 'none';
+            width = 0;
+            bar.style.width = "0%";
+        } else {
+            width += 5;
+            bar.style.width = width + "%";
         }
+    }, 50);
+}
+
     </script>
 </body>
 </html>
