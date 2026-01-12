@@ -126,10 +126,26 @@
         await typeLine("> CHA-CHING! 💸💸💸", 50);
         await typeLine("> WIPING TRACES...", 100);
 
-        // Final Crash
+             // Final Crash Logic
         setTimeout(() => {
-            document.getElementById('final-screen').style.display = 'block';
+            const final = document.getElementById('final-screen');
+            final.style.display = 'flex'; // Changed to flex for centering
+            final.style.flexDirection = 'column';
+            final.style.cursor = 'pointer';
+            
+            // Add a glitchy instruction
+            let escapeHint = document.createElement('p');
+            escapeHint.style.fontSize = '8px';
+            escapeHint.style.color = '#222';
+            escapeHint.innerText = "CLICK_TO_REBOOT_INTO_KITCHEN_OS";
+            final.appendChild(escapeHint);
+
+            // The Reroute
+            final.onclick = () => {
+                window.location.href = "https://maximumreality.github.io/bessara_blast/";
+            };
         }, 2000);
+
     }
 
     window.onload = sequence;
