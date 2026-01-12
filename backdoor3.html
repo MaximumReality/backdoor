@@ -87,31 +87,40 @@
         }
 
         function openSecret() {
-    // 30% chance Azul catches you and kicks you to the Space Sector
-    if(Math.random() < 0.3) {
-        document.getElementById('stream').innerText = "!! SECURITY_BREACH: AZUL_SENSORS_TRIPPED !!";
-        document.body.style.filter = "invert(1) contrast(2)";
-        
-        setTimeout(() => {
-            alert("AZUL: 'Privacy violation detected. You weren't supposed to see the litter-box setup. Evacuating you to Neptune.'");
-            window.location.href = "https://maximumreality.github.io/space/"; 
-        }, 1500);
-        return;
-    }
-
     const mem = document.getElementById('secret-memory');
     const vid = document.getElementById('secret-vid');
+    const stream = document.getElementById('stream');
+    
+    // 1. Show the video and play it
     mem.style.display = 'block';
     vid.play();
+    stream.innerText = ">> WARNING: ACCESSING PROTECTED_LITTERBOX_FEED...";
 }
 
+function closeSecret() {
+    const mem = document.getElementById('secret-memory');
+    const vid = document.getElementById('secret-vid');
+    const stream = document.getElementById('stream');
 
-        function closeSecret() {
-            const mem = document.getElementById('secret-memory');
-            const vid = document.getElementById('secret-vid');
-            mem.style.display = 'none';
-            vid.pause();
-        }
+    // 2. 40% chance Azul catches you ONLY when you try to leave
+    if(Math.random() < 0.4) {
+        stream.innerText = "!! SECURITY_BREACH: AZUL_SENSORS_TRIPPED !!";
+        document.body.style.filter = "invert(1) contrast(2)";
+        
+        // Pause video but don't hide yet for dramatic effect
+        vid.pause();
+
+        setTimeout(() => {
+            alert("AZUL: 'You saw the high scores in the litter box? Unacceptable. Evacuating you to Neptune.'");
+            window.location.href = "https://maximumreality.github.io/space/"; 
+        }, 1500);
+    } else {
+        // 3. The safe exit (if you're lucky)
+        mem.style.display = 'none';
+        vid.pause();
+        stream.innerText = ">> NEURAL_STABILIZED. SEARCHING...";
+    }
+}
 
         setInterval(injectThought, 3000);
     </script>
