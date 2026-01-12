@@ -87,11 +87,24 @@
         }
 
         function openSecret() {
-            const mem = document.getElementById('secret-memory');
-            const vid = document.getElementById('secret-vid');
-            mem.style.display = 'block';
-            vid.play();
-        }
+    // 30% chance Azul catches you and kicks you to the Space Sector
+    if(Math.random() < 0.3) {
+        document.getElementById('stream').innerText = "!! SECURITY_BREACH: AZUL_SENSORS_TRIPPED !!";
+        document.body.style.filter = "invert(1) contrast(2)";
+        
+        setTimeout(() => {
+            alert("AZUL: 'Privacy violation detected. You weren't supposed to see the litter-box setup. Evacuating you to Neptune.'");
+            window.location.href = "https://maximumreality.github.io/space/"; 
+        }, 1500);
+        return;
+    }
+
+    const mem = document.getElementById('secret-memory');
+    const vid = document.getElementById('secret-vid');
+    mem.style.display = 'block';
+    vid.play();
+}
+
 
         function closeSecret() {
             const mem = document.getElementById('secret-memory');
