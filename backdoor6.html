@@ -257,8 +257,22 @@ function typeBSOD(text, i) {
     if (i < text.length) {
         bsod.innerText += text.charAt(i);
         setTimeout(()=> typeBSOD(text, i+1), 50);
+    } else {
+        // Once typing is done, show the secret redirect hint
+        let hint = document.createElement('div');
+        hint.style.fontSize = "1rem";
+        hint.style.marginTop = "30px";
+        hint.style.color = "#004400"; // Faint green
+        hint.innerText = "[ TAP_SCREEN_TO_VISIT_WHISKER_BYTES ]";
+        bsod.appendChild(hint);
+        
+        // The Final Backdoor to Azul's Cafe
+        bsod.onclick = () => {
+            window.location.href = "https://maximumreality.github.io/WhiskerBytesCatCafe/";
+        };
     }
 }
+
 </script>
 </body>
 </html>
