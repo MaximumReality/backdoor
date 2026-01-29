@@ -38,6 +38,16 @@
         .redacted { background: #32cd32; color: #32cd32; cursor: pointer; transition: 0.3s; }
         .redacted:active { background: transparent; color: #ff00ff; } /* Reveals on touch */
 
+
+        .redacted:hover {
+    color: #ff00ff;
+    text-shadow: 0 0 10px #ff00ff;
+}
+.redacted:active {
+    background: transparent;
+    color: #ff00ff;
+    text-shadow: 0 0 20px #ff00ff;
+}
         .nav-link { 
     position: fixed; 
     bottom: 20px; 
@@ -55,9 +65,24 @@
     0%, 19%, 21%, 23%, 25%, 54%, 56%, 100% { opacity: 1; }
     20%, 24%, 55% { opacity: 0; }
 }
+        @keyframes pawPrint {
+  0% {transform: translateY(100%) rotate(0deg);}
+  100% {transform: translateY(-100%) rotate(360deg);}
+}
+
+.paw {
+  position: absolute;
+  font-size: 12px;
+  color: #32cd32;
+  animation: pawPrint 15s linear infinite;
+}
+
 </style>
 </head>
 <body>
+    <div class="paw" style="left:20%;">🐾</div>
+<div class="paw" style="left:50%;">🐾</div>
+<div class="paw" style="left:80%;">🐾</div>
     <div class="terminal-overlay"></div>
 
     <div class="log-container">
@@ -83,7 +108,11 @@
 
         <div class="log-entry">
             <p class="user">[ AZUL_01 ]:</p>
-            <p><span class="redacted">SECRET_DATA: Azul found the backup drive with the novel drafts. They are hidden in the /STORIES/ directory.</span></p>
+            <p>
+  <a href="https://maximumreality.github.io/backdoor/librarians-key.html" target="_blank" class="redacted">
+    SECRET_DATA: Azul found the backup drive with the novel drafts. They are hidden in the /STORIES/ directory.
+  </a>
+</p>
         </div>
     </div>
 
