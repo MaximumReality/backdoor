@@ -50,12 +50,19 @@
         color: #00f2ff;
     }
     .highlight {
-        color: #00f2ff;
-        font-weight: bold;
-        cursor: pointer;
-        transition: all 0.3s ease;
-        animation: flickerText 4s infinite;
-    }
+    color: #00f2ff;
+    font-weight: bold;
+    text-decoration: none; /* No underline for that clean terminal look */
+    transition: all 0.3s ease;
+    animation: flickerText 4s infinite;
+}
+
+.highlight:hover {
+    color: #ff00de; /* Glows pink when you hover/touch */
+    text-shadow: 0 0 8px #ff00de;
+    border-bottom: 1px solid #ff00de;
+}
+
     @keyframes flickerText {
         0%, 100% { opacity: 1; }
         50% { opacity: 0.8; }
@@ -138,27 +145,28 @@
     <p>If you feel like you are speaking a different language, you are. You are learning the tongue of <span class="highlight">Scalar Physics</span>. Here is your bridge:</p>
 
     <table class="glossary-table">
-        <tr>
-            <th>Term</th>
-            <th>The Maximum Reality Translation</th>
-        </tr>
-        <tr>
-            <td><span class="highlight">Fractal Pattern</span></td>
-            <td>A pattern that repeats across scales—from the neurons in your brain to the galaxies in the sky.</td>
-        </tr>
-        <tr>
-            <td><span class="highlight">The Ice Wall</span></td>
-            <td>The boundary protecting the hidden continents from the "known" world.</td>
-        </tr>
-        <tr>
-            <td><span class="highlight">Ju-Munchie</span></td>
-            <td>The frequency-code used to stabilize a gravitational anomaly (or portal).</td>
-        </tr>
-        <tr>
-            <td><span class="highlight">The Torus</span></td>
-            <td>The donut shape of energy found in Earth’s magnetic field, snowmen, and Azul’s tail.</td>
-        </tr>
-    </table>
+    <tr>
+        <th>Term</th>
+        <th>The Maximum Reality Translation</th>
+    </tr>
+    <tr>
+        <td><a href="https://youtube.com/shorts/_6IKB0tLqXs?si=NZURwtkRbeimJWuA" target="_blank" class="highlight">Sacred Geometry</a></td>
+        <td>The pattern behind all space, light, math, and harmony—found everywhere in the Metaverse. [00:00:04]</td>
+    </tr>
+    <tr>
+        <td><a href="https://youtu.be/Oj-rvU6qYIE?si=noPToV_XlVQHrqMC" target="_blank" class="highlight">The Ice Wall</a></td>
+        <td>The guardian boundary protecting the hidden continents from the "known" world. [00:02:06]</td>
+    </tr>
+    <tr>
+        <td><a href="https://youtu.be/I725JBtYjGQ?si=2UJ2aYWTCpVh5aYT" target="_blank" class="highlight">Ju-Munchie</a></td>
+        <td>The frequency-code used by the guide to stabilize a gravitational anomaly or portal. [00:03:00]</td>
+    </tr>
+    <tr>
+        <td><a href="https://youtu.be/I725JBtYjGQ?si=2UJ2aYWTCpVh5aYT" target="_blank" class="highlight">The Torus</a></td>
+        <td>The donut shape of energy found in Earth’s magnetic field, snowmen, and Azul’s tail.</td>
+    </tr>
+</table>
+
 
     <h3>Navigation Tips:</h3>
     <ul>
