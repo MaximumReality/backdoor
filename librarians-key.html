@@ -93,24 +93,51 @@
   border-radius: 15px; /* Adds a nice rounded arcade look */
   box-shadow: 0 0 20px rgba(255, 0, 255, 0.5); /* Cyberpunk neon glow */
 }
+.archive-transmission {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  margin: 30px auto;
+  border: 2px solid #00ff41; /* Matrix green border */
+  padding: 10px;
+  background: rgba(0, 0, 0, 0.8);
+  max-width: fit-content;
+}
+
+.archive-transmission iframe {
+  border: 1px solid #00ff41;
+  filter: sepia(20%) contrast(110%); /* Slight vintage data-screen look */
+}
+
+.transmission-label {
+  color: #00ff41;
+  font-family: 'Courier New', monospace;
+  font-size: 0.8rem;
+  margin-top: 10px;
+  text-transform: uppercase;
+  letter-spacing: 2px;
+}
 
 </style>
 </head>
 <body>
-    <div class="video-container">
+
+
+<div class="container">
+
+    <div class="archive-transmission">
   <iframe 
     width="315" 
     height="560" 
     src="https://www.youtube.com/embed/zVuEg8lw7u4" 
-    title="Maximum Reality Welcome" 
+    title="Librarian Access - Maximum Reality" 
     frameborder="0" 
     allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" 
     allowfullscreen>
   </iframe>
+  <p class="transmission-label">TRANS-ID: LIBRARIAN_KEY_VERIFIED</p>
 </div>
 
-
-<div class="container">
     <h1>The Librarian's Key</h1>
     
     <div class="ethos">
