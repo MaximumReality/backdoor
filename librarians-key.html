@@ -81,9 +81,34 @@
         opacity: 1;
         text-shadow: 0 0 8px #32cd32;
     }
+    .video-container {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  padding: 20px;
+}
+
+.video-container iframe {
+  max-width: 100%;
+  border-radius: 15px; /* Adds a nice rounded arcade look */
+  box-shadow: 0 0 20px rgba(255, 0, 255, 0.5); /* Cyberpunk neon glow */
+}
+
 </style>
 </head>
 <body>
+    <div class="video-container">
+  <iframe 
+    width="315" 
+    height="560" 
+    src="https://www.youtube.com/embed/zVuEg8lw7u4" 
+    title="Maximum Reality Welcome" 
+    frameborder="0" 
+    allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" 
+    allowfullscreen>
+  </iframe>
+</div>
+
 
 <div class="container">
     <h1>The Librarian's Key</h1>
